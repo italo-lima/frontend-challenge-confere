@@ -8,6 +8,19 @@ export const Container = styled.div`
   box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
   cursor: grab;
 
+  ${props => props.isDragging && css`
+    border: 2px dashed rgba(0,0,0, 0.2);
+    padding: 15px;
+    border-radius; 0;
+    background: transparent;
+    box-shadow: none;
+    cursor: grabbing;
+
+    p, svg, header, div {
+      opacity: 0;
+    }
+  `} 
+
   header {
     height: 35px;
     display: flex;
@@ -34,19 +47,6 @@ export const Container = styled.div`
     svg {
       border-radius: 2px;
     }
-
-  /* ${props => props.isDragging && css`
-    border: 2px dashed rgba(0,0,0, 0.2);
-    padding: 31px;
-    border-radius; 0;
-    background: transparent;
-    box-shadow: none;
-    cursor: grabbing;
-
-    p, svg, header {
-      opacity: 0;
-    }
-  `} */
   }
   
 `;

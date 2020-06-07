@@ -1,5 +1,5 @@
-import React from "react"
-import {useDrag} from "react-dnd"
+import React, {useRef} from "react"
+import {useDrag, useDrop} from "react-dnd"
 import {FaTrash} from "react-icons/fa"
 import { useDispatch } from "react-redux"
 
@@ -8,20 +8,56 @@ import {formatDate} from "../../utils/formatDate"
 import {formatValue} from "../../utils/formatValue"
 import * as TransactionActions from "../../store/modules/transaction/actions"
 
-export default function Card({data, listIndex}){
+export default function Card({data, listIndex, cardIndex}){
+  const ref = useRef()
   const dispatch = useDispatch();
-  // const [{isDragging}, dragRef] = useDrag({
-  //   item: {
-  //     type: 'CARD',
-  //     transaction: data
-  //   },
-  //   collect: monitor => ({
-  //     isDragging: monitor.isDragging(),
-  //   })
-  // })
+  const [{isDragging}, dragRef] = useDrag({
+    item: {
+      type: 'CARD',
+      transaction: data._id,
+      cardIndex
+    },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    })
+  })
+
+  //item -> card arrastado
+  const [, dropRef] = useDrop({
+    accept: 'CARD',
+    hover(item, monitor) {
+      const dragIndex = item.cardIndex; //card selecionado
+      const targetIndex = cardIndex; //card destino
+
+      if(dragIndex === targetIndex){
+        return;
+      }
+
+      const targetSize = ref.current.getBoundingClientRect(); //informações do card (tamanho, posicionamento)
+      const targetCenter = (targetSize.bottom - targetSize.top) / 2;
+      
+      const draggedOffset = monitor.getClientOffset();
+      const draggedTop = draggedOffset.y - targetSize.top;
+
+      //evitando cálculo para o card que vem por cima, enquanto não atinge o meio do próximo
+      if(dragIndex < targetIndex && draggedTop < targetCenter){
+        return
+      }
+
+      //evitando cálculo para o card que vem por baixo, enquanto não atinge o meio do próximo
+      if(dragIndex > targetIndex && draggedTop > targetCenter){
+        return
+      }
+
+
+
+    }
+  })
+
+  dragRef(dropRef(ref))
 
   return (
-    <Container /*ref={dragRef} isDragging={isDragging} */ >
+    <Container ref={ref} isDragging={isDragging} >
       <header>
         <div>
           <p>Cartão: *****{data.card.number}</p>

@@ -30,7 +30,7 @@ export default function List({data, listIndex}){
       </header>
 
       <ul>
-        {data.cards.map(card => <Card listIndex={listIndex} key={card._id} data={card} />)}
+        {data.cards.map((card, index) => <Card listIndex={listIndex} cardIndex={index} key={card._id} data={card} />)}
       </ul>
     </Container>
   )
