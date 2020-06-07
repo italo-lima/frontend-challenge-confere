@@ -9,17 +9,14 @@ const positionsTransactions = {
 const transactionsInitial = [
   {
     title: "Aguardando pagamento",
-    creatable: true,
     cards: []
   },
   {
     title: "Pagamento",
-    creatable: false,
     cards: []
   },
   {
     title: "Recebido",
-    creatable: false,
     cards: []
   }
 ]
@@ -44,17 +41,13 @@ export default function transactions(state=transactionsInitial, action){
 
     case 'DESTROY_TRANSACTION': {
       return produce(state, draft => {
-        const index = draft[action.listIndex].cards.findIndex(card => card._id === action.id)
+        const {id, listIndex} = action.payload
+
+        const index = draft[listIndex].cards.findIndex(card => card._id === id)
         
         if(index >=0 ){
-          draft[action.listIndex].cards.splice(index, 1)
+          draft[listIndex].cards.splice(index, 1)
         }
-      })
-    }
-
-    case 'UPDATE_STATUS_TRANSACTION': {
-      return produce(state, draft => {
-        console.log(action)
       })
     }
 

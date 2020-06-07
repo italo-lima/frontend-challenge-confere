@@ -9,7 +9,7 @@ import {formatValue} from "../../utils/formatValue"
 import * as TransactionActions from "../../store/modules/transaction/actions"
 
 export default function Card({data, listIndex, cardIndex}){
-  const ref = useRef()
+  const ref = useRef();
   const dispatch = useDispatch();
   const [{isDragging}, dragRef] = useDrag({
     item: {
@@ -55,7 +55,6 @@ export default function Card({data, listIndex, cardIndex}){
       dispatch(TransactionActions.moveCard(draggedListIndex, targetListIndex, dragIndex, targetIndex))
       item.cardIndex = targetIndex
       item.listIndex = targetListIndex
-
     }
   })
 

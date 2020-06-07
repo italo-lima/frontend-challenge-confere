@@ -3,7 +3,6 @@ import {useDrop} from "react-dnd"
 import { useDispatch } from "react-redux"
 import * as TransactionActions from "../../store/modules/transaction/actions"
 
-import {MdAdd} from "react-icons/md"
 import {Container} from "./styles"
 
 import Card from "../Card"
@@ -28,13 +27,7 @@ export default function List({data, listIndex}){
     <Container ref={dropRef} >
       <header>
         <h2>{data.title}</h2>
-        {data.creatable && (
-          <button type="button">
-            <MdAdd size={24} color="#fff" />
-          </button>
-        )}
       </header>
-
       <ul>
         {data.cards.map((card, index) => <Card listIndex={listIndex} cardIndex={index} key={card._id} data={card} />)}
       </ul>
