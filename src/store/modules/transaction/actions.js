@@ -21,3 +21,13 @@ export function updateTransaction(id, listIndex, status){
     status
   }
 }
+
+export function moveCard(fromList, toList, from, to){
+  return {
+    type: "MOVE_CARD_TRANSACTION",
+    fromList,
+    toList,
+    from,
+    to
+  }
+}

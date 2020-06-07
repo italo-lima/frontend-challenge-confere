@@ -1,25 +1,31 @@
 import React, {useContext} from "react"
 import {useDrop} from "react-dnd"
+import { useDispatch } from "react-redux"
+import * as TransactionActions from "../../store/modules/transaction/actions"
 
 import {MdAdd} from "react-icons/md"
 import {Container} from "./styles"
-import {CardContext} from "../../App"
 
 import Card from "../Card"
 
 export default function List({data, listIndex}){
-  // const {infoTransaction} = useContext(CardContext)
+  const dispatch = useDispatch();
 
-  // const [{isOver}, dropRef] = useDrop({
-  //   accept: 'CARD',
-  //   drop: (item, monitor) => console.log(item),
-  //   collect: monitor => ({
-  //     isOver: monitor.isOver(),
-  //   })
-  // })
+  const [_, dropRef] = useDrop({
+    accept: 'CARD',
+    drop: (item, monitor) => {
+      if (data.cards.length === 0) {
+        dispatch(TransactionActions.moveCard(item.listIndex, listIndex, item.cardIndex, 0))
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  })
 
   return (
-    <Container /*ref={dropRef} done={data.done} */ >
+    <Container ref={dropRef} >
       <header>
         <h2>{data.title}</h2>
         {data.creatable && (

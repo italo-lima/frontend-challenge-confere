@@ -15,7 +15,8 @@ export default function Card({data, listIndex, cardIndex}){
     item: {
       type: 'CARD',
       transaction: data._id,
-      cardIndex
+      cardIndex,
+      listIndex
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
@@ -26,10 +27,12 @@ export default function Card({data, listIndex, cardIndex}){
   const [, dropRef] = useDrop({
     accept: 'CARD',
     hover(item, monitor) {
+      const draggedListIndex = item.listIndex //index da lista de origin
       const dragIndex = item.cardIndex; //card selecionado
       const targetIndex = cardIndex; //card destino
+      const targetListIndex = listIndex //index da lista de destino
 
-      if(dragIndex === targetIndex){
+      if(dragIndex === targetIndex && draggedListIndex === targetListIndex){
         return;
       }
 
@@ -49,7 +52,9 @@ export default function Card({data, listIndex, cardIndex}){
         return
       }
 
-
+      dispatch(TransactionActions.moveCard(draggedListIndex, targetListIndex, dragIndex, targetIndex))
+      item.cardIndex = targetIndex
+      item.listIndex = targetListIndex
 
     }
   })

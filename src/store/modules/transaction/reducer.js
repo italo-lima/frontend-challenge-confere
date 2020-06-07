@@ -57,6 +57,16 @@ export default function transactions(state=transactionsInitial, action){
         console.log(action)
       })
     }
+
+    case 'MOVE_CARD_TRANSACTION': {
+      return produce(state, draft => {
+        const { fromList, toList, from, to } = action;
+        const dragged = draft[fromList].cards[from];
+
+        draft[fromList].cards.splice(from, 1);
+        draft[toList].cards.splice(to, 0, dragged)
+      })
+    }
     
     default:
       return state
