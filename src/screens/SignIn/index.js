@@ -35,7 +35,7 @@ export default function SignIn(){
         const response = await api.post('/session', {email: data.email, password: data.password})
         const {user, token} = response.data
 
-        localStorage.setItem('@confere:token', JSON.stringify(token));
+        localStorage.setItem('@confere:token', token);
         localStorage.setItem('@confere:user', JSON.stringify(user));
 
         reset();
