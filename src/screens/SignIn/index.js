@@ -5,7 +5,7 @@ import * as Yup from "yup"
 import api from "../../services/api"
 import {toast} from "react-toastify"
 
-import {Container} from "./styles"
+import {Container, Error} from "./styles"
 import Input from "../../components/Input"
 
 export default function SignIn(){
@@ -16,8 +16,8 @@ export default function SignIn(){
 
   const handleSubmit = useCallback(
     async (data, {reset}) => {
-
       try {
+        formRef.current.setErrors({});
         const schema = Yup.object().shape({
           email: Yup.string()
             .required('Email Obrigatório')
@@ -32,12 +32,11 @@ export default function SignIn(){
           abortEarly: false,
         });
 
-        // Passando informações do usuário para context API para criar session
         const response = await api.post('/session', {email: data.email, password: data.password})
         const {user, token} = response.data
 
-        localStorage.setItem('@confere:token', token);
-        localStorage.setItem('@confere:user', user);
+        localStorage.setItem('@confere:token', JSON.stringify(token));
+        localStorage.setItem('@confere:user', JSON.stringify(user));
 
         reset();
         history.push('/board');
@@ -45,7 +44,6 @@ export default function SignIn(){
         toast.error("Erro ao fazer login")
         if (err instanceof Yup.ValidationError) {
           setErrors(err.errors)
-          // return;
         }
       }
     },
@@ -54,15 +52,16 @@ export default function SignIn(){
 
   return(
     <Container>
-      {errors && errors.map(err => <p>{err}</p>)}
        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Faça seu logon</h1>
+          {errors && errors.map(err => <Error>{err}</Error>)}
           <Input 
             name="email" 
             placeholder="Digite seu E-mail"
             />
           <Input
             name="password"
+            type="password"
             placeholder="Digite sua senha"
           />
           <button type="submit">Entrar</button>
