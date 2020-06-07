@@ -10,11 +10,11 @@ export const Container = styled.div`
     border-left: 1px solid rgba(0,0,0, 0.05);
   }
 
-  header {
+  >header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 42px;
+    height: 35px;
 
     h2 {
       font-weight: 500;

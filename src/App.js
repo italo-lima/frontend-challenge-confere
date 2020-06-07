@@ -1,29 +1,29 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import {Provider} from "react-redux"
+import {BrowserRouter} from "react-router-dom"
+import {ToastContainer} from "react-toastify"
 
+import Routes from "./routes"
 import GlobalStyle from "./style/global"
 import Header from "./components/Header"
-import Board from "./components/Board"
-
-const infoTransaction = (data) => {
-  console.log(data)
-}
-export const CardContext = createContext({
-  infoTransaction: null
-})
+import SignIn from "./screens/SignIn"
+// import Board from "./screens/Board"
+import store from "./store/"
  
 function App() {
   
   return (
     // <CardContext.Provider value={{infoTransaction}}>
     //   <DndProvider backend={HTML5Backend}>
-        <>
-        <Header/>
-        <Board/>
-        
-        <GlobalStyle/>
-        </>
+    <BrowserRouter>
+        <Provider store={store}>
+          <Routes />
+          <GlobalStyle/>
+          <ToastContainer autoClose={3000} />
+        </Provider>
+      </BrowserRouter>
     //   </DndProvider>
     // </CardContext.Provider>
   )

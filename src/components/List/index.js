@@ -7,7 +7,7 @@ import {CardContext} from "../../App"
 
 import Card from "../Card"
 
-export default function List({data}){
+export default function List({data, listIndex}){
   // const {infoTransaction} = useContext(CardContext)
 
   // const [{isOver}, dropRef] = useDrop({
@@ -30,7 +30,7 @@ export default function List({data}){
       </header>
 
       <ul>
-        {data.cards.map(card => <Card key={card.received._id} data={card} />)}
+        {data.cards.map(card => <Card listIndex={listIndex} key={card._id} data={card} />)}
       </ul>
     </Container>
   )

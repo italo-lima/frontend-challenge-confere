@@ -1,7 +1,6 @@
 import styled, {css} from "styled-components"
 
 export const Container = styled.div`
-  position: relative;
   background: #fff;
   border-radius: 5px;
   margin-bottom: 15px;
@@ -10,24 +9,33 @@ export const Container = styled.div`
   cursor: grab;
 
   header {
-    position: absolute;
-    top: -22px;
-    left: 15px;
-  }
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  p {
-    font-weight: 500;
-    line-height: 20px;
-  }
+    div {
+      display: flex;
 
-  img {
-    width: 24px;
-    height: 24px;
-    border-radius: 2px;
-    margin-top: 5px;
-  }
+      p {
+        font-size: 10px;
+        font-weight: 500;
+        margin-right: 10px;
+        margin-bottom: 0;
+      }
+    }
 
-  ${props => props.isDragging && css`
+    button {
+      border: 0;
+      padding: 5px;
+      background: transparent;
+    }
+
+    svg {
+      border-radius: 2px;
+    }
+
+  /* ${props => props.isDragging && css`
     border: 2px dashed rgba(0,0,0, 0.2);
     padding: 31px;
     border-radius; 0;
@@ -35,16 +43,25 @@ export const Container = styled.div`
     box-shadow: none;
     cursor: grabbing;
 
-    p, img, header {
+    p, svg, header {
       opacity: 0;
     }
-  `}
+  `} */
+  }
+  
 `;
 
-export const Label = styled.span`
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  display: inline-block;
-  background: ${props => props.color}
+export const Description = styled.div`
+  padding: 5px 0;
+
+  div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      font-size: 14px;
+    }
+  }
+
 `;
