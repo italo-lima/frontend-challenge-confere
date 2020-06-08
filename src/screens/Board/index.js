@@ -1,5 +1,6 @@
 import React, {useEffect, useCallback} from "react"
 import { useDispatch, useSelector } from "react-redux"
+import io from "socket.io-client"
 
 import api from "../../services/api"
 import List from "../../components/List"
@@ -11,19 +12,27 @@ export default function Board(){
   const dispacth = useDispatch();
   const transactions = useSelector(state => state.transactions);
 
-  const loadTransactions = useCallback(async () => {
-    
-    const {data} = await api.get('transaction');
-    
-    data.forEach(transaction => {
+  const registerConnectionIO = useCallback(async () => {
+    const socket = io("http://localhost:3333")
 
+    socket.on('create.transaction', transaction => {
       dispacth(TransactionAction.addTransaction(transaction))
     })
+
+    socket.on('update.transaction', transaction => {
+      dispacth(TransactionAction.updateTransaction(transaction))
+    })
+
+    const {data} = await api.get('transaction');
+    data.forEach(transaction => {
+      dispacth(TransactionAction.addTransaction(transaction))
+    })
+
   }, [dispacth])
-  
+
   useEffect(() => {
-    loadTransactions();
-  }, [loadTransactions])
+    registerConnectionIO();
+  }, [registerConnectionIO])
 
   return (
     <>

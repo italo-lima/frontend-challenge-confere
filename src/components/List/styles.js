@@ -5,9 +5,13 @@ export const Container = styled.div`
   height: 100%;
   flex: 0 0 320px;
   opacity: ${props => props.done ? 0.6 : 1};
+  border-right: 1px solid rgba(0,0,0, 0.05);
 
-  & + div {
-    border-left: 1px solid rgba(0,0,0, 0.05);
+  @media(max-width: 860px) {
+    > div {
+      overflow: scroll;
+      max-height: 350px;
+    }
   }
 
   >header {

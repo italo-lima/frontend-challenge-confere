@@ -5,6 +5,7 @@ export const Container = styled.div`
   border-radius: 5px;
   margin-bottom: 15px;
   padding: 15px;
+  max-width: 360px;
   box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
   cursor: grab;
 

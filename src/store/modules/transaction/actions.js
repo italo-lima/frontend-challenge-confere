@@ -28,12 +28,10 @@ export function addTransaction(transaction) {
   }
 }
 
-export function updateTransaction(id, listIndex, status){
+export function updateTransaction(transaction){
   return {
-    type: "UPDATE_STATUS_TRANSACTION",
-    id,
-    listIndex,
-    status
+    type: "UPDATE_CARD_TRANSACTION",
+    transaction
   }
 }
 

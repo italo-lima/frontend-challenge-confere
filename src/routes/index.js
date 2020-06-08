@@ -11,7 +11,6 @@ export default function Routes(){
     return(
         <Switch>
             <Route exact path='/' component={SignIn}/>
-
             <Route path='/board' component={Board} isPrivate/>
            
         </Switch>

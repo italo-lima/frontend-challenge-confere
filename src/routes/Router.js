@@ -10,7 +10,6 @@ export default function RouteWrapper({
 }) {
 
     const signed = isAuthenticated() ? true : false
-    console.log(isPrivate, signed)
 
     if(!signed && isPrivate){
         return <Redirect to='/' />

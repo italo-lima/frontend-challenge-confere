@@ -60,6 +60,37 @@ export default function transactions(state=transactionsInitial, action){
         draft[toList].cards.splice(to, 0, dragged)
       })
     }
+
+    case 'UPDATE_CARD_TRANSACTION': {
+      return produce(state, draft => {
+        let listIndex = "";
+        let cardIndex = ""
+        const {_id} = action.transaction
+
+        draft.forEach((stateTransactions, index) => {
+          stateTransactions.cards.forEach((transaction, indexTransaction) => {
+            if(transaction._id === _id){
+              console.log("entrou")
+              listIndex = index
+              cardIndex = indexTransaction
+            }
+          })
+        })
+
+        draft[listIndex].cards.splice(cardIndex, 1)
+        
+        const receiveds = action.transaction.received.filter(received => received.status !== 'received');
+
+        if(receiveds.length){
+            const type = action.transaction.type
+            let index = positionsTransactions[type]
+            draft[index].cards.push(action.transaction)
+        } else {
+          let index = positionsTransactions['debit']
+          draft[index].cards.push(action.transaction)
+        }
+      })
+    }
     
     default:
       return state
